@@ -7,6 +7,9 @@ const Start = () => {
         <h1>Welcome to the Home Page</h1>
 
         <div class = 'fadedLine'></div>
+
+        <br/>
+        <br/>
         
         <div class='poshBox'>
             <Link to="/postcodes"><button>Start</button></Link>
