@@ -5,7 +5,10 @@ import {Link} from 'react-router-dom';
 
 const EnterPostcodes = () => {
 
+  // Postcode list 
   const [postcodeList, setPostcodeList] = useState([{postcode: ''}, {postcode: ''}]);
+  // Mode of transport
+  const [travelMode, setTravelMode] = useState("Driving");
 
   console.log(postcodeList);
   
@@ -46,34 +49,44 @@ const EnterPostcodes = () => {
       <br/>
 
       <div className='poshBox'>
+
+        <h2>Journey Calculator</h2>
+
         {/* Button to dynamically add more fields*/}
-        <button onClick={addRow}>Add</button>
-      </div>
+        <button onClick={addRow}>Add row</button>
 
-      <br/>
+        <p> Postcodes must be given with a space, such as: PL19 9DP</p>
 
-      <div className='poshBox' id='postcodeContainer'>
+        <br/>
+        <br/>
 
-        {/* Map fields to postcode list */}
-        {postcodeList.map((singlePostcode, indexVal) => (
+        <div id='postcodeContainer'>
 
-        <div key={indexVal}> 
-          <input type='text' value={singlePostcode.postcode} onChange={(e) => postcodeUpdate(e, indexVal)} name='postcode'/>
+          {/* Map fields to postcode list */}
+          {postcodeList.map((singlePostcode, indexVal) => (
 
-          {/* Only show remove button if there is > 2 fields */}
-          {postcodeList.length > 2 && (
-          <button onClick={() => delRow(indexVal)}>Remove</button> 
-          )} 
+          <div key={indexVal}> 
+            <input type='text' value={singlePostcode.postcode} onChange={(e) => postcodeUpdate(e, indexVal)} name='postcode' placeholder='Enter postcode'/>
+
+            {/* Only show remove button if there is > 2 fields */}
+            {postcodeList.length > 2 && (
+            <button onClick={() => delRow(indexVal)}>Remove</button> 
+            )} 
+          </div>
+          ))}
         </div>
-        ))}
 
-      </div>
+        <br/>
 
-      <br/>
+        {/*Mode of transport toggle buttons*/}
+        <div className="travelToggle">
+          <button onClick={() => setTravelMode("Driving")} className={travelMode == "Driving" ? "active" : ""} >Driving</button>
+          <button onClick={() => setTravelMode("Bicycling")} className={travelMode == "Bicycling" ? "active" : ""} >Cycling</button>
+          <button onClick={() => setTravelMode("Walking")} className={travelMode == "Walking" ? "active" : ""} >Walking</button>
+        </div>
 
-      <div className='poshBox'>
-      {/* Send postcode list to results component*/}
-      <Link to="/results" state={{ postcodeList }}><button>Calculate</button></Link>
+        {/* Send postcode list to results component*/}
+        <Link to="/results" state={{ postcodeList, travelMode }}><button>Calculate journey</button></Link>
       </div>
         
     </div>
